@@ -1557,42 +1557,57 @@ class MainWindow(QMainWindow):
             if btn == "monthly":
                 monthliesToAppend = [] 
                 monthlies = self.monthlies(year, month, day, uhrzeit)
-                for m in monthlies:
-                    m_with_end = m.split(" ")[0] + " " + uhrzeit_end
-                    dict = dbaccess.allAppointments()
-                    for dts in dict.keys():
-                        end = ""
-                        if dts in enddates:
-                            end = enddates[dts]
-                        isError = False    
-                        if validators.isDateBetween(dts, m, end) or validators.isDateBetween(dts, m_with_end, end): 
-                            self.showdialog()
-                            isError = True
+                
+                dict = dbaccess.allAppointments()
+                
+                if len(dict > 0):
+                
+                    for m in monthlies:
+                        m_with_end = m.split(" ")[0] + " " + uhrzeit_end
+                        for dts in dict.keys():
+                            end = ""
+                            if dts in enddates:
+                                end = enddates[dts]
+                            isError = False    
+                            if validators.isDateBetween(dts, m, end) or validators.isDateBetween(dts, m_with_end, end): 
+                                self.showdialog()
+                                isError = True
 
-                        if not isError:
-                            monthliesToAppend.append(m)
+                            if not isError:
+                                monthliesToAppend.append(m)
                             
-                dbaccess.insertAppointmentWithTitleAndDescription2(monthliesToAppend,ttitel, tbeschreibung, uhrzeit_end) 
+                    dbaccess.insertAppointmentWithTitleAndDescription2(monthliesToAppend,ttitel, tbeschreibung, uhrzeit_end) 
+         
+                else:
+                
+                    dbaccess.insertAppointmentWithTitleAndDescription2(monthlies,ttitel, tbeschreibung, uhrzeit_end) 
          
             if btn == "weekly":
                 wkliesToAppend = []
                 wklies = self.weeklies(year, month, day, uhrzeit)
-                for w in wklies:
-                    w_with_end = w.split(" ")[0] + " " + uhrzeit_end
-                    dict = dbaccess.allAppointments()
-                    for dts in dict.keys():
-                        end = ""
-                        if dts in enddates:
-                            end = enddates[dts]
-                        isError = False     
-                        if validators.isDateBetween(dts, w, end) or validators.isDateBetween(dts, w_with_end, end): 
-                            self.showdialog()
-                            isError = True
-                            
-                        if not isError:
-                            wkliesToAppend.append(w)
+
+                dict = dbaccess.allAppointments()                 
                 
-                dbaccess.insertAppointmentWithTitleAndDescription2(wkliesToAppend,ttitel, tbeschreibung, uhrzeit_end)
+                if len(dict) > 0:
+                
+                    for w in wklies:
+                        w_with_end = w.split(" ")[0] + " " + uhrzeit_end
+                        for dts in dict.keys():
+                            end = ""
+                            if dts in enddates:
+                                end = enddates[dts]
+                            isError = False     
+                            if validators.isDateBetween(dts, w, end) or validators.isDateBetween(dts, w_with_end, end): 
+                                self.showdialog()
+                                isError = True
+                            
+                            if not isError:
+                                wkliesToAppend.append(w)
+                
+                    dbaccess.insertAppointmentWithTitleAndDescription2(wkliesToAppend,ttitel, tbeschreibung, uhrzeit_end)
+         
+                else:
+                    dbaccess.insertAppointmentWithTitleAndDescription2(wklies,ttitel, tbeschreibung, uhrzeit_end)
          
             dlg.close()
     
