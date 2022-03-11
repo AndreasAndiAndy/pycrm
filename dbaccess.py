@@ -70,6 +70,7 @@ def doQueryDeleteAppointmentsAndCres2(conn):
 
 
 def insertDictAddenda(conn, rcDict):
+
     cur = conn.cursor() 
     
     for name, isdelete in rcDict.items():        
@@ -821,6 +822,7 @@ def updateCresSerial(conn, cresentry, date):
     cur.close()
 
 def connectResourceContacts(thedts):
+
     dict = {}
     
     conn = sqlite3.connect("pcrm.db")    
@@ -834,6 +836,16 @@ def connectResourceContacts(thedts):
             res.append(name)   
     conn.commit()
     cur.close()
+    
+    ################
+
+    conn = sqlite3.connect("pcrm.db")    
+    cur = conn.cursor()
+    cur.execute("DELETE FROM addenda")
+    conn.commit()
+    cur.close()
+    
+    #################
     
     for d in thedts:
         dict[d] = res

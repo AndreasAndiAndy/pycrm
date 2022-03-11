@@ -295,8 +295,8 @@ class ScrollMessageBoxRCInfo(QMessageBox):
            msg = QMessageBox()
            msg.setIcon(QMessageBox.Warning)
            msg.setText(warning)
-           msg.setWindowTitle("!")
-           msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+           msg.setWindowTitle("info")
+           msg.setStandardButtons(QMessageBox.Ok)
            msg.exec_()
 
 
@@ -472,8 +472,8 @@ class ScrollMessageBoxCreateRC(QMessageBox):
        msg = QMessageBox()
        msg.setIcon(QMessageBox.Warning)
        msg.setText(warning)
-       msg.setWindowTitle("!")
-       msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+       msg.setWindowTitle("info")
+       msg.setStandardButtons(QMessageBox.Ok)
        msg.exec_()
            
    def validate_save(self, fieldvalues):
@@ -746,7 +746,7 @@ class MainWindow(QMainWindow):
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(self.widget)
         self.setCentralWidget(self.scroll)
-        self.setWindowTitle("pycrm5")
+        self.setWindowTitle("pycrm")
         self.setAttribute(Qt.WA_StyledBackground, True)
         self.setStyleSheet('background-color: lightgreen;')
         self.setGeometry(90, 90, 950, 600)
@@ -773,8 +773,8 @@ class MainWindow(QMainWindow):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Warning)
         msg.setText(warning)
-        msg.setWindowTitle("!")
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msg.setWindowTitle("info")
+        msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
 
     def defaultDir(self):
@@ -1421,7 +1421,7 @@ class MainWindow(QMainWindow):
                 if validators.isDateBetween(dts, dateinput, end) or validators.isDateBetween(dts, dateinput_end, end): 
                     self.showWarningFollowing("Überschneidung!")
                     isError = True
-              
+
             #Dieser Termin ist als Dummytermin für neu angelegte Kontaktressourcen vorbehalten. 
             if dateinput == "0000-00-00 00:00":
                 self.showWarningFollowing("Ungültige Zeiteingabe!")
@@ -1554,7 +1554,8 @@ class MainWindow(QMainWindow):
             
             thedates = []
             
-            if btn == "monthly":            
+            if btn == "monthly":
+                monthliesToAppend = [] 
                 monthlies = self.monthlies(year, month, day, uhrzeit)
                 for m in monthlies:
                     m_with_end = m.split(" ")[0] + " " + uhrzeit_end
@@ -1563,15 +1564,18 @@ class MainWindow(QMainWindow):
                         end = ""
                         if dts in enddates:
                             end = enddates[dts]
+                        isError = False    
                         if validators.isDateBetween(dts, m, end) or validators.isDateBetween(dts, m_with_end, end): 
                             self.showdialog()
                             isError = True
 
-                    if not isError:
-                        thedates = monthlies
-                        dbaccess.insertAppointmentWithTitleAndDescription2(monthlies,ttitel, tbeschreibung, uhrzeit_end) 
+                        if not isError:
+                            monthliesToAppend.append(m)
+                            
+                dbaccess.insertAppointmentWithTitleAndDescription2(monthliesToAppend,ttitel, tbeschreibung, uhrzeit_end) 
          
             if btn == "weekly":
+                wkliesToAppend = []
                 wklies = self.weeklies(year, month, day, uhrzeit)
                 for w in wklies:
                     w_with_end = w.split(" ")[0] + " " + uhrzeit_end
@@ -1580,13 +1584,15 @@ class MainWindow(QMainWindow):
                         end = ""
                         if dts in enddates:
                             end = enddates[dts]
+                        isError = False     
                         if validators.isDateBetween(dts, w, end) or validators.isDateBetween(dts, w_with_end, end): 
                             self.showdialog()
                             isError = True
-
-                    if not isError:
-                        thedates = monthlies
-                        dbaccess.insertAppointmentWithTitleAndDescription2(wklies,ttitel, tbeschreibung, uhrzeit_end)
+                            
+                        if not isError:
+                            wkliesToAppend.append(w)
+                
+                dbaccess.insertAppointmentWithTitleAndDescription2(wkliesToAppend,ttitel, tbeschreibung, uhrzeit_end)
          
             dlg.close()
     
@@ -1608,7 +1614,8 @@ class MainWindow(QMainWindow):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Warning)
         msg.setText("Überschneidung!")
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msg.setWindowTitle("info")
+        msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
 
         
