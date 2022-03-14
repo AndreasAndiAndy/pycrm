@@ -27,11 +27,11 @@ from test.test_decimal import directory
  
 #Die Ressourcenkontakte können hier hinzugefügt oder bearbeitet werden.
 class ScrollMessageBoxShowResourceContactsAdd(QMessageBox):  
-
+   
    def __init__(self, *args, **kwargs):
        
        def msgbtn(tf, btn):
-           
+               
            if btn.text().upper() == 'CANCEL':
                #Hier in die DB schreiben, dann das Ding neu aufrufen.  
                dbaccess.updateMainFilterString("")            
@@ -143,7 +143,7 @@ class ScrollMessageBoxShowResourceContacts(QMessageBox):
        QMessageBox.__init__(self, *args, **kwargs)
        
        self.setWindowTitle("Ressourcenkontakte einsehen oder löschen.")
-       
+
        self.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
 
        self.setInformativeText("Filtern: OK drücken. ~~~~ Löschen: Häkchen setzen, dann 'CANCEL'")
@@ -233,13 +233,13 @@ class ScrollMessageBoxRCInfo(QMessageBox):
            information = {} 
            self.iff = {}
 
-           captions = ["TEL", "MOBIL", "EMAIL", "STR", "NUM", "PLZ", "ORT", "GEB", "IBAN", "BIC"]
+           captions = ["TEL", "MOBIL", "EMAIL", "STR", "NUM", "PLZ", "ORT", "GEB", "IBAN", "BIC", "NOTIZEN"]
            
            flo = QFormLayout()
            flo.setAlignment(Qt.AlignTop)
            
            infos = dbaccess.allCategoriesAll(d) 
-            
+           
            flo.addRow("", lbl)
 
            i=0                
@@ -427,11 +427,13 @@ class ScrollMessageBoxCreateRC(QMessageBox):
       lay = QVBoxLayout(self.content)
       
       #fieldnames = ['Tel', 'Mobil', 'Email', 'Str.', 'Hausnr.', 'PLZ', 'Ort', 'Geb. Tag', 'Name', 'IBAN', 'BIC', 'neue Kategorie']
-      fieldnames = ['Tel', 'Mobil', 'Email', 'Str.', 'Hausnr.', 'PLZ', 'Ort', 'Geb. Tag', 'Name', 'IBAN', 'BIC']
-      categories = []
       
-      for r in dbaccess.allCategories2(): 
-          categories.append(r[0])
+      fieldnames = ['Tel', 'Mobil', 'Email', 'Str.', 'Hausnr.', 'PLZ', 'Ort', 'Geb. Tag', 'Name', 'IBAN', 'BIC', 'NOTES']
+      
+      #categories = []
+      
+      #for r in dbaccess.allCategories2(): 
+      #    categories.append(r[0])
       
       for i in range(0, len(fieldnames)):
           
@@ -498,19 +500,23 @@ class ScrollMessageBoxCreateRC(QMessageBox):
        iban = fieldvalues[9]
        self.fieldvalues[9] = "" 
        bic = fieldvalues[10]
-       self.fieldvalues[10] = "" 
-       cat = fieldvalues[11].upper()
-       self.fieldvalues[11] = ""
-       cat2 = fieldvalues[12]
-       self.fieldvalues[12] = ""
+       self.fieldvalues[10] = ""
+       notes = fieldvalues[11]
+       self.fieldvalues[11] = ""        
+       #cat = fieldvalues[12]
+       #self.fieldvalues[12] = ""
+       #cat2 = fieldvalues[13]
+       #self.fieldvalues[13] = ""
 
-       cattosave = ""
+       nts = ""
+
+       #cattosave = ""
        
-       if(cat2 == "Kategorie hinzufügen"):
-           cattosave = cat
+       #if(cat2 == "Kategorie hinzufügen"):
+       #    cattosave = cat
 
-       else:
-           cattosave = cat2
+       #else:
+       #    cattosave = cat2
 
       #Der Name muss eindeutig sein, d. h. FEHLER, wenn der name schon vergeben ist in der DB.
        isnameextant = False
@@ -547,11 +553,16 @@ class ScrollMessageBoxCreateRC(QMessageBox):
            self.showWarningFollowing("Ungültige Zeitangabe!")
            isError = True
        
-       if not isError:    
-           if len(cattosave) > 0:
-               name = cattosave.upper() + "_" + name    
+       if not isError:
+            if len(notes) > 0:
+                nts = notes    
+       
+       #if not isError:    
+       #    if len(cattosave) > 0:
+       #        name = cattosave.upper() + "_" + name    
            
-           dbaccess.insertNewRC2(tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  cattosave) 
+           
+       dbaccess.insertNewRC2(tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  nts) 
        
 #Bisher implementierte Fehler erhalten Meldungen.
 class CustomDialog(QDialog):
@@ -1560,7 +1571,7 @@ class MainWindow(QMainWindow):
                 
                 dict = dbaccess.allAppointments()
                 
-                if len(dict > 0):
+                if len(dict) > 0:
                 
                     for m in monthlies:
                         m_with_end = m.split(" ")[0] + " " + uhrzeit_end

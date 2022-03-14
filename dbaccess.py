@@ -403,7 +403,9 @@ def doQueryInsertIntoSettingsPath(conn, p):
     cur.close()
 
 
-def insertCresFullData2(conn, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  cattosave):
+####################################################################################################################
+
+def insertCresFullData2(conn, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  notes):
     cur = conn.cursor()
     resourcecontact = doQueryRCWith2(conn)
     isresourcecontactcorrect = True
@@ -413,26 +415,29 @@ def insertCresFullData2(conn, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag
             isresourcecontactcorrect = False
     
     if isresourcecontactcorrect:
-        sql = "INSERT INTO cres (tel, mobil, email, street, num, plz, ort, birthday, datum, name, iban, bic) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        val = tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag, "0000-00-00 00:00",  name,  iban,  bic        
+        sql = "INSERT INTO cres (tel, mobil, email, street, num, plz, ort, birthday, datum, name, iban, bic, notes) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        val = tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag, "0000-00-00 00:00",  name,  iban,  bic, notes        
         cur.execute(sql, val)    
     
-    iscategorycorrect = True
-    if len(cattosave) > 0:
-        cats = doQueryCategories2(conn)
-        for x in cats:
-            if cattosave == x[0]:
-                iscategorycorrect = False
+    #iscategorycorrect = True
+    #if len(notes) > 0:
+    #    cats = doQueryCategories2(conn)
+    #    for x in cats:
+    #        if notes == x[0]:
+    #            iscategorycorrect = False
  
-    conn.commit()
-    cur.close()   
-    cur = conn.cursor()
+    #conn.commit()
+    #cur.close()   
+    #cur = conn.cursor()
     
-    if iscategorycorrect and cattosave != '':
-        cur.execute("INSERT INTO categories (cat) VALUES(?)", (cattosave,))
+    #if iscategorycorrect and notes != '':
+    #    cur.execute("INSERT INTO categories (cat) VALUES(?)", (notes,))
     
     conn.commit() 
     cur.close()
+
+
+####################################################################################################################
 
 def doQueryDescriptionFor2(conn, datum):
     result = []
@@ -474,7 +479,7 @@ def deleteCres2(conn, name, date):
 
 def updateCresForCols2(conn, d):
     cur = conn.cursor()
-    cur.execute("UPDATE cres SET tel = ?, mobil = ?, email = ?, street = ?, num = ?, plz = ?, ort = ?, birthday = ?, iban = ?, bic = ? WHERE name = ? ", (d["tel"], d["mobil"], d["email"], d["street"], d["num"], d["plz"], d["ort"], d["birthday"], d["iban"], d["bic"], d["name"],))
+    cur.execute("UPDATE cres SET tel = ?, mobil = ?, email = ?, street = ?, num = ?, plz = ?, ort = ?, birthday = ?, iban = ?, bic = ?, notes = ? WHERE name = ? ", (d["tel"], d["mobil"], d["email"], d["street"], d["num"], d["plz"], d["ort"], d["birthday"], d["iban"], d["bic"], d["notes"], d["name"],))
     conn.commit()
     cur.close()
 
@@ -628,6 +633,7 @@ def doQueryCategoriesAll(conn, cat):
         infos.append(cresinfo[7])
         infos.append(cresinfo[10])
         infos.append(cresinfo[11])
+        infos.append(cresinfo[12])
     return infos       
     
 def allCategoriesAll(cat):    
@@ -650,9 +656,11 @@ def updateCres2(creasnewcols):
     colsdict["birthday"] = statusquo[7]
     colsdict["iban"] = statusquo[8]
     colsdict["bic"] = statusquo[9]
+    colsdict["notes"] = statusquo[10]
     colsdict["name"] = ""
     
     for col in creasnewcols:
+         
          if col == "TEL":
             colsdict["tel"] = creasnewcols[col]
         
@@ -682,6 +690,9 @@ def updateCres2(creasnewcols):
             
          if col == "BIC":
              colsdict["bic"] = creasnewcols[col]
+    
+         if col == "NOTIZEN":
+             colsdict["notes"] = creasnewcols[col]
     
          if col == "NAME":
              colsdict["name"] = creasnewcols[col]
@@ -722,9 +733,9 @@ def selectDescriptionFor2(datum):
     res = doQueryDescriptionFor2(myConnection, datum)    
     return res
 
-def insertNewRC2(tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  cattosave):
+def insertNewRC2(tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  notes):
     myConnection = sqlite3.connect("pcrm.db")
-    insertCresFullData2(myConnection, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  cattosave)
+    insertCresFullData2(myConnection, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  notes)
 
 def editAppointmentDateUpdate2(title, description, dateinput, dateinput_end):
         myConnection = sqlite3.connect("pcrm.db")
@@ -793,9 +804,6 @@ def insertIntoSettingsPath(p):
     myConnection = sqlite3.connect("pcrm.db")
     doQueryInsertIntoSettingsPath(myConnection,p)
 
-    
-    
-##########################################################################################################
 
 def updateCresSerial(conn, cresentry, date):
     
@@ -836,16 +844,12 @@ def connectResourceContacts(thedts):
             res.append(name)   
     conn.commit()
     cur.close()
-    
-    ################
 
     conn = sqlite3.connect("pcrm.db")    
     cur = conn.cursor()
     cur.execute("DELETE FROM addenda")
     conn.commit()
     cur.close()
-    
-    #################
     
     for d in thedts:
         dict[d] = res
@@ -865,7 +869,7 @@ def connectResourceContacts(thedts):
          
         for rc in rclist:
             
-            cur.execute("SELECT * FROM cres WHERE name = ? AND datum = ?", (rc, '0000-00-00 00:00',))
+            cur.execute("SELECT *  WHERE name = ? AND datum = ?", (rc, '0000-00-00 00:00',))
             
             result = []
             for x in cur.fetchall():

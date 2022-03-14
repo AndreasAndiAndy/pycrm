@@ -38,13 +38,28 @@ cur.execute(
          )
 
 
+cur.execute(
+        '''DROP TABLE cres'''
+         )
+
+
 
 #conn.execute(
-#        '''CREATE TABLE ADDENDA
+#        '''CREATE TABLE CRES
 #         (
-#		  NAME CHAR(500),
-#          DATE CHAR(20),
-#          ISDELETE CHAR(20)
+#		  TEL CHAR(200),
+#          MOBIL CHAR(200),
+#          EMAIL CHAR(200),
+#          STREET CHAR(200),
+#          NUM CHAR(200),
+#          PLZ CHAR(200),
+#          ORT CHAR(200),
+#          BIRTHDAY CHAR(200),
+#          DATUM CHAR(200),
+#          NAME CHAR(200),
+#          IBAN CHAR(200),
+#          BIC CHAR(200),
+#          NOTES CHAR(500)
 #         );'''
 #         )
 
