@@ -830,7 +830,7 @@ def updateCresSerial(conn, cresentry, date):
     cur.close()
 
 def connectResourceContacts(thedts):
-
+    
     dict = {}
     
     conn = sqlite3.connect("pcrm.db")    
@@ -869,7 +869,7 @@ def connectResourceContacts(thedts):
          
         for rc in rclist:
             
-            cur.execute("SELECT *  WHERE name = ? AND datum = ?", (rc, '0000-00-00 00:00',))
+            cur.execute("SELECT * FROM cres WHERE name = ? AND datum = ?", (rc, '0000-00-00 00:00',))
             
             result = []
             for x in cur.fetchall():

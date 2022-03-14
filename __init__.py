@@ -1376,7 +1376,7 @@ class MainWindow(QMainWindow):
         dlg.exec_()
    
    
-    def rc_add(self):
+    def rc_add(self): 
         result = ScrollMessageBoxShowResourceContactsAdd(None)
         result.exec_() 
 
@@ -1592,6 +1592,7 @@ class MainWindow(QMainWindow):
                 else:
                 
                     dbaccess.insertAppointmentWithTitleAndDescription2(monthlies,ttitel, tbeschreibung, uhrzeit_end) 
+                    thedates = monthlies
          
             if btn == "weekly":
                 wkliesToAppend = []
@@ -1619,7 +1620,8 @@ class MainWindow(QMainWindow):
          
                 else:
                     dbaccess.insertAppointmentWithTitleAndDescription2(wklies,ttitel, tbeschreibung, uhrzeit_end)
-         
+                    thedates = wklies
+                    
             dlg.close()
     
             dbaccess.connectResourceContacts(thedates)

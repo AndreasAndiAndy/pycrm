@@ -38,12 +38,6 @@ cur.execute(
          )
 
 
-cur.execute(
-        '''DROP TABLE cres'''
-         )
-
-
-
 #conn.execute(
 #        '''CREATE TABLE CRES
 #         (
