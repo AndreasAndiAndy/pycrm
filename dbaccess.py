@@ -880,3 +880,38 @@ def connectResourceContacts(thedts):
             conn.commit()
 
     cur.close()
+
+
+def setLocale(loc):
+
+
+
+    conn = sqlite3.connect("pcrm.db")    
+    cur = conn.cursor()
+
+    cur.execute("UPDATE locale SET locale = ?", (loc,))
+
+    conn.commit()
+    cur.close()
+
+
+
+def getLocale():
+
+    result = None
+    
+    conn = sqlite3.connect("pcrm.db")    
+    cur = conn.cursor()
+    
+    cur.execute("SELECT locale FROM locale")
+    
+    if cur.fetchone() == None:
+        result = None
+    
+    else:
+        result = cur.fetchone()[0]
+
+    conn.commit()
+    cur.close()
+    
+    return result

@@ -39,6 +39,14 @@ cur.execute(
 
 
 #conn.execute(
+#        '''CREATE TABLE LOCALE
+#         (
+#		  LOCALE CHAR(50)
+#         );'''
+#         )
+
+
+#conn.execute(
 #        '''CREATE TABLE CRES
 #         (
 #		  TEL CHAR(200),

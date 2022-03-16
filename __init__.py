@@ -23,6 +23,9 @@ from tkinter import *
 from tkinter.filedialog import askdirectory, askopenfilename
 from test.test_decimal import directory
 
+import i18n
+
+LOCALE = "de_DE"
 
  
 #Die Ressourcenkontakte können hier hinzugefügt oder bearbeitet werden.
@@ -578,7 +581,9 @@ class CustomDialog(QDialog):
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
 
-#######################################################################################################################################
+
+
+
 
 #Hauptklasse
 class MainWindow(QMainWindow):
@@ -589,6 +594,16 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.printAppointments()
+
+        LOCALE = i18n.getLocale() ###########################################################
+       
+       
+        #TODO: An dieser stelle _ herstellen, damit übersetzt werden kann. 
+       
+        
+       
+       
+        ###################################################################################### 
        
         tb = QToolBar(self)
         
@@ -663,10 +678,28 @@ class MainWindow(QMainWindow):
         grid_layout.addWidget(button, 0, 0, 1, 3)
         
         create = QPushButton("ResKontakt neu")
-        create.resize(10, 10)
+        #create.resize(10, 10)
         create.clicked.connect(self.showdialogRD)
+
+        grid_layout.addWidget(create, 0, 3, 1, 1)
         
-        grid_layout.addWidget(create, 0, 3, 1, 3)
+        ####################################################################################
+        
+        languages = QComboBox()
+        
+        if LOCALE == "de_DE":
+            languages.addItems(["Deutsch", "English"])
+  
+            
+        elif LOCALE == "en_GB":
+            languages.addItem("Englisch")
+            languages.addItems(["Deutsch"])
+  
+        languages.currentTextChanged.connect(self.language_changed)
+
+        ####################################################################################
+
+        grid_layout.addWidget(languages, 0, 4, 1, 1)
 
         
         filteredDict = {}
@@ -765,6 +798,10 @@ class MainWindow(QMainWindow):
 
         return
 
+    def language_changed(self, l):
+        i18n.setLocale(l)
+        self.close()
+        self.restart(["", "", ""])
 
     def readAllAppointments(self):
         Tk().withdraw()
