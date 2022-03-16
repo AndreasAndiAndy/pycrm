@@ -22,11 +22,16 @@ from datetime import timedelta
 from tkinter import *
 from tkinter.filedialog import askdirectory, askopenfilename
 from test.test_decimal import directory
-
+from os.path import exists
+import xml.etree.ElementTree as ET
 import i18n
 
 LOCALE = "de_DE"
 
+t = None
+
+def _():
+    print("Hello")
  
 #Die Ressourcenkontakte können hier hinzugefügt oder bearbeitet werden.
 class ScrollMessageBoxShowResourceContactsAdd(QMessageBox):  
@@ -582,6 +587,50 @@ class CustomDialog(QDialog):
         self.setLayout(self.layout)
 
 
+class Translator:
+   __instance = None
+
+   
+   @staticmethod 
+   def getInstance(loc):
+   
+      if Translator.__instance == None:
+         Translator()
+         
+      dictionary = {}   
+        
+      filename = "i18n" + "/" + loc + ".xml"
+    
+      if not exists(filename):
+        return dictionary
+
+      else:    
+        tree = ET.ElementTree(file=filename)
+        root = tree.getroot()
+
+        inputs = []
+        outputs = []
+
+        for str in root.iter('string'):
+            for child in str:
+                if child.tag == "input":
+                    inputs.append(child.text)
+                if child.tag == "output":
+                    outputs.append(child.text)
+                
+        #TODO: Hier weiter. #_()
+
+
+      #return Translator.__instance
+      
+      return dictionary
+            
+   def __init__(self):
+   
+      if Translator.__instance != None:
+         raise Exception("This class is a singleton!")
+      else:
+         Translator.__instance = self
 
 
 
@@ -598,7 +647,8 @@ class MainWindow(QMainWindow):
         LOCALE = i18n.getLocale() ###########################################################
        
        
-        #TODO: An dieser stelle _ herstellen, damit übersetzt werden kann. 
+        t = Translator.getInstance(LOCALE)
+        
        
         
        
@@ -838,7 +888,7 @@ class MainWindow(QMainWindow):
         
         p = ""
         
-        if len(path[0][0]) > 0:
+        if len(path) > 0:
             
             try:
                 p = path[0][0].replace("/", "\\\\")

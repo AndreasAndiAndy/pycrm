@@ -38,6 +38,11 @@ cur.execute(
          )
 
 
+cur.execute(
+        '''DELETE FROM settings'''
+         )
+
+
 #conn.execute(
 #        '''CREATE TABLE LOCALE
 #         (
