@@ -30,8 +30,21 @@ LOCALE = "de_DE"
 
 t = None
 
-def _():
-    print("Hello")
+def _(str):
+
+    LOCALE = i18n.getLocale() 
+    t = Translator.getInstance(LOCALE)
+    #print(LOCALE)
+    res = ""
+    
+    if str in t.keys(): 
+        res = t[str]
+    
+    else:
+        res = str
+    
+    
+    return res
  
 #Die Ressourcenkontakte können hier hinzugefügt oder bearbeitet werden.
 class ScrollMessageBoxShowResourceContactsAdd(QMessageBox):  
@@ -618,7 +631,8 @@ class Translator:
                 if child.tag == "output":
                     outputs.append(child.text)
                 
-        #TODO: Hier weiter. #_()
+        for i in range(0, len(inputs)):
+            dictionary[inputs[i]] = outputs[i]
 
 
       #return Translator.__instance
@@ -645,14 +659,7 @@ class MainWindow(QMainWindow):
         self.printAppointments()
 
         LOCALE = i18n.getLocale() ###########################################################
-       
-       
         t = Translator.getInstance(LOCALE)
-        
-       
-        
-       
-       
         ###################################################################################### 
        
         tb = QToolBar(self)
@@ -664,10 +671,10 @@ class MainWindow(QMainWindow):
         weekly = QPushButton("T. wöchentlich")
         
         cb = QComboBox()
-        cb.addItem("Monatsansicht")
-        cb.addItem("Wochenansicht")
-        cb.addItem("Tagesansicht")
-        cb.addItem("Jahresansicht")
+        cb.addItem(_("Monatsansicht"))
+        cb.addItem(_("Wochenansicht"))
+        cb.addItem(_("Tagesansicht"))
+        cb.addItem(_("Jahresansicht"))
         
         cal.clicked[QtCore.QDate].connect(partial(self.cal_clicked_filter, cal, cb)) 
 

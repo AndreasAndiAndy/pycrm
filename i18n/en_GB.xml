@@ -2,7 +2,11 @@
 <string>
   <input>Monatsansicht</input>
   <output>monthly view</output>
-    <input>Wochenansicht</input>
+  <input>Wochenansicht</input>
   <output>weekly view</output>
+  <input>Tagesansicht</input>
+  <output>daily view</output>
+  <input>Jahresansicht</input>
+  <output>yearly view</output>
 </string>
 
