@@ -1121,7 +1121,7 @@ class MainWindow(QMainWindow):
         terminbeschreibung.move(50,100)
         terminbeschreibung.resize(260, 20)
             
-        hour = QLabel("Beginn Std.", dlg)
+        hour = QLabel(_("Beginn Std."), dlg)
         hour.move(20, 136)
             
         uhrzeit = QComboBox(dlg)
@@ -1143,7 +1143,7 @@ class MainWindow(QMainWindow):
         minuten.addItems(["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"])
  
 
-        hour_end = QLabel("Ende Std.", dlg)
+        hour_end = QLabel(_("Ende Std."), dlg)
         hour_end.move(190, 136)
             
         uhrzeit_end = QComboBox(dlg)
@@ -1151,7 +1151,7 @@ class MainWindow(QMainWindow):
         uhrzeit_end.move(220, 151)
 
 
-        minute_end = QLabel("Min.", dlg)
+        minute_end = QLabel(_("Min."), dlg)
         minute_end.move(270, 136)
             
         minuten_end = QComboBox(dlg)
@@ -1276,7 +1276,7 @@ class MainWindow(QMainWindow):
         terminbeschreibung.move(50,100)
         terminbeschreibung.resize(260, 20)
             
-        hour = QLabel("Beginn Std.", dlg)
+        hour = QLabel(_("Beginn Std."), dlg)
         hour.move(20, 136)
             
         uhrzeit = QComboBox(dlg)
@@ -1284,7 +1284,7 @@ class MainWindow(QMainWindow):
         uhrzeit.move(50, 151)
 
 
-        minute = QLabel("Min.", dlg)
+        minute = QLabel(_("Min."), dlg)
         minute.move(100, 136)
             
         minuten = QComboBox(dlg)
@@ -1292,7 +1292,7 @@ class MainWindow(QMainWindow):
         minuten.move(100, 151)
 
 
-        hour_end = QLabel("Ende Std.", dlg)
+        hour_end = QLabel(_("Ende Std."), dlg)
         hour_end.move(190, 136)
             
         uhrzeit_end = QComboBox(dlg)
@@ -1300,7 +1300,7 @@ class MainWindow(QMainWindow):
         uhrzeit_end.move(220, 151)
 
 
-        minute_end = QLabel("Min.", dlg)
+        minute_end = QLabel(_("Min."), dlg)
         minute_end.move(270, 136)
             
         minuten_end = QComboBox(dlg)
@@ -1424,7 +1424,7 @@ class MainWindow(QMainWindow):
         terminbeschreibung.move(50,100)
         terminbeschreibung.resize(260, 20)
             
-        hour = QLabel("Beginn Std.", dlg)
+        hour = QLabel(_("Beginn Std."), dlg)
         hour.move(20, 136)
             
         uhrzeit = QComboBox(dlg)
@@ -1432,21 +1432,21 @@ class MainWindow(QMainWindow):
         uhrzeit.move(50, 151)
 
 
-        minute = QLabel("Min.", dlg)
+        minute = QLabel(_("Min."), dlg)
         minute.move(100, 136)
             
         minuten = QComboBox(dlg)
         minuten.addItems(["00", "05", "10", "15", "25", "30", "35", "40", "45", "50", "55", "59"])
         minuten.move(100, 151)
 
-        hour_end = QLabel("Ende Std.", dlg)
+        hour_end = QLabel(_("Ende Std."), dlg)
         hour_end.move(190, 136)
             
         uhrzeit_end = QComboBox(dlg)
         uhrzeit_end.addItems(["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"])
         uhrzeit_end.move(220, 151)
 
-        minute_end = QLabel("Min.", dlg)
+        minute_end = QLabel(_("Min."), dlg)
         minute_end.move(270, 136)
             
         minuten_end = QComboBox(dlg)

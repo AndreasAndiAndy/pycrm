@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <string>
+  <input>Min.</input>
+  <output>mm</output>
   <input>Montag</input>
   <output>Monday</output>
     <input>Dienstag</input>
@@ -50,6 +52,10 @@
   <output>delete all appointments</output>
    <input>KW:</input>
   <output>CW:</output>
+   <input>Ende Std.</input>
+  <output>end hh</output>
+     <input>Beginn Std.</input>
+  <output>start hh</output>
      <input>Datum</input>
   <output>date</output>
      <input>Termintitel</input>
