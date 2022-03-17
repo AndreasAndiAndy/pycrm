@@ -30,6 +30,9 @@ LOCALE = "de_DE"
 
 t = None
 
+######################
+#Globale Funkton i18n
+#####################
 def _(str):
 
     LOCALE = i18n.getLocale() 
@@ -658,17 +661,18 @@ class MainWindow(QMainWindow):
 
         self.printAppointments()
 
-        LOCALE = i18n.getLocale() ###########################################################
+        LOCALE = i18n.getLocale() 
+
         t = Translator.getInstance(LOCALE)
-        ###################################################################################### 
        
         tb = QToolBar(self)
         
         cal = QCalendarWidget(self) 
         cal.setGridVisible(True)
+        
 
-        monthly = QPushButton("T. monatlich") 
-        weekly = QPushButton("T. wöchentlich")
+        monthly = QPushButton(_("T. monatlich")) 
+        weekly = QPushButton(_("T. wöchentlich"))
         
         cb = QComboBox()
         cb.addItem(_("Monatsansicht"))
@@ -691,17 +695,17 @@ class MainWindow(QMainWindow):
         vlayout.addWidget(monthly)
         vlayout.addWidget(weekly)
         
-        datechooser = QPushButton("Einzeltermin anlegen")
+        datechooser = QPushButton(_("Einzeltermin anlegen"))
         datechooser.setObjectName('datechooser')
         datechooser.released.connect(partial(self.create_date))
         vlayout.addWidget(datechooser)
         
-        pathchooser = QPushButton("Pfad wählen")
+        pathchooser = QPushButton(_("Pfad wählen"))
         pathchooser.setObjectName('pathchooser')
         pathchooser.released.connect(partial(self.choosePath))
         vlayout.addWidget(pathchooser)
         
-        seriesdel = QPushButton("Terminserie löschen")
+        seriesdel = QPushButton(_("Terminserie löschen"))
         seriesdel.setObjectName('seriesdel')
         seriesdel.released.connect(partial(self.deleteSeries))
         vlayout.addWidget(seriesdel)
@@ -726,7 +730,7 @@ class MainWindow(QMainWindow):
         aktuellesDatum = datetime.date.today()
         kw = aktuellesDatum.isocalendar()[1] 
         
-        button = QPushButton(" Kalenderwoche-(" + str(kw) + ")---------------- Datum des Termins mit Wochentag - Termin (zum Bearbeiten klicken)")
+        button = QPushButton(_("Kalenderwoche-(") + str(kw) + _(")---------------- Datum des Termins mit Wochentag - Termin (zum Bearbeiten klicken)"))
         button.setStyleSheet("text-align: left;font-weight: bold; font-size: 14px; color:black")
         button.setEnabled(False)
         
@@ -734,13 +738,11 @@ class MainWindow(QMainWindow):
         
         grid_layout.addWidget(button, 0, 0, 1, 3)
         
-        create = QPushButton("ResKontakt neu")
+        create = QPushButton(_("ResKontakt neu"))
         #create.resize(10, 10)
         create.clicked.connect(self.showdialogRD)
 
         grid_layout.addWidget(create, 0, 3, 1, 1)
-        
-        ####################################################################################
         
         languages = QComboBox()
         
@@ -749,12 +751,10 @@ class MainWindow(QMainWindow):
   
             
         elif LOCALE == "en_GB":
-            languages.addItem("Englisch")
+            languages.addItem("English")
             languages.addItems(["Deutsch"])
   
         languages.currentTextChanged.connect(self.language_changed)
-
-        ####################################################################################
 
         grid_layout.addWidget(languages, 0, 4, 1, 1)
 
@@ -801,13 +801,13 @@ class MainWindow(QMainWindow):
                 if y == 0:
                     dt = date.text().split(" ")[0].split("-")
                     kw = datetime.date(year=int(dt[0]), month=int(dt[1]), day=int(dt[2])).isocalendar()[1] 
-                    date.setText("KW: " + str(kw))
+                    date.setText(_("KW: ") + str(kw))
                     grid_layout.addWidget(date, x, y)
                 if y == 1:
                     dt = date.text().split(" ")[0].split("-")
                     enddt = enddates[date.text()]
                     intDay = datetime.date(year=int(dt[0]), month=int(dt[1]), day=int(dt[2])).weekday()
-                    days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
+                    days = [_("Montag"), _("Dienstag"), _("Mittwoch"), _("Donnerstag"), _("Freitag"), _("Samstag"), _("Sonntag")]
                     date.setText(date.text() + "-" + enddt.split(" ")[1] + ", " +  days[intDay]) 
                     grid_layout.addWidget(date, x, y)
                 if y == 2:
@@ -819,26 +819,26 @@ class MainWindow(QMainWindow):
             
             i+=1
         
-        tdrucken = QPushButton("Drucke Termine")
+        tdrucken = QPushButton(_("Drucke Termine"))
         tdrucken.released.connect(self.printAppointments) 
         grid_layout.addWidget(tdrucken, len(filteredDict)+1, 0)                        
-        resdrucken = QPushButton("Drucke Reskontakte")
+        resdrucken = QPushButton(_("Drucke Reskontakte"))
         resdrucken.released.connect(partial(self.printRescontacts))
         grid_layout.addWidget(resdrucken, len(filteredDict)+2, 0)
-        resdelete = QPushButton("Reskontakt(e) anzeigen / zum Löschen markieren")
+        resdelete = QPushButton(_("Reskontakt(e) anzeigen / zum Löschen markieren"))
         resdelete.released.connect(partial(self.showRescontacts))
         grid_layout.addWidget(resdelete, len(filteredDict)+3, 0)       
         
-        read_contacts = QPushButton("Lese Termine ein")
+        read_contacts = QPushButton(_("Lese Termine ein"))
         read_contacts.released.connect(partial(self.readAllAppointments))
         grid_layout.addWidget(read_contacts, len(filteredDict)+4, 0)       
         
-        read_contacts = QPushButton("Lese Kontakte ein")
+        read_contacts = QPushButton(_("Lese Kontakte ein"))
         read_contacts.released.connect(partial(self.readAllContacts))
         grid_layout.addWidget(read_contacts, len(filteredDict)+5, 0)       
 
          
-        allappointmentsdelete = QPushButton("Alle Termine löschen")
+        allappointmentsdelete = QPushButton(_("Alle Termine löschen"))
         allappointmentsdelete.released.connect(partial(self.deleteAllAppointments))
         grid_layout.addWidget(allappointmentsdelete, len(filteredDict)+6, 0)        
                 
@@ -904,11 +904,16 @@ class MainWindow(QMainWindow):
                dbaccess.insertIntoSettingsPath("") 
                self.close()
                self.restart(["", "", ""])
-            
-            p+="\\\\"
+               
+               
+            if len(p) > 0:
+                p+="\\\\"
+                
+            else:
+                self.showWarningFollowing(_("Bitte erst Verzeichnis wählen, wohin gedruckt werden soll!"))
         
         else:
-            self.showWarningFollowing("Bitte erst Verzeichnis wählen, wohin gedruckt werden soll!")
+            self.showWarningFollowing(_("Bitte erst Verzeichnis wählen, wohin gedruckt werden soll!"))
         
         return p
 
@@ -1100,7 +1105,7 @@ class MainWindow(QMainWindow):
         dlg = QDialog()
         dlg.resize(400, 300)
             
-        title = QLabel("Termintitel", dlg)
+        title = QLabel(_("Termintitel"), dlg)
         title.move(20, 20)
             
         termintitel = QLineEdit(dlg)
@@ -1108,7 +1113,7 @@ class MainWindow(QMainWindow):
         termintitel.move(50,50)
         termintitel.resize(260, 20)
             
-        description = QLabel("Terminbeschreibung", dlg)
+        description = QLabel(_("Terminbeschreibung"), dlg)
         description.move(20, 80)
             
         terminbeschreibung = QLineEdit(dlg)
@@ -1162,7 +1167,7 @@ class MainWindow(QMainWindow):
 
         minuten.move(100, 151)
 
-        date = QLabel("Datum", dlg)        
+        date = QLabel(_("Datum"), dlg)        
         date.move(20, 180)
             
         datum = QLineEdit(dlg)
@@ -1257,14 +1262,14 @@ class MainWindow(QMainWindow):
         dlg = QDialog()
         dlg.resize(400, 300)
             
-        title = QLabel("Termintitel", dlg)
+        title = QLabel(_("Termintitel"), dlg)
         title.move(20, 20)
             
         termintitel = QLineEdit(dlg)
         termintitel.move(50,50)
         termintitel.resize(260, 20)
             
-        description = QLabel("Terminbeschreibung", dlg)
+        description = QLabel(_("Terminbeschreibung"), dlg)
         description.move(20, 80)
             
         terminbeschreibung = QLineEdit(dlg)
@@ -1303,7 +1308,7 @@ class MainWindow(QMainWindow):
         minuten_end.move(270, 151)
 
 
-        date = QLabel("Datum", dlg)
+        date = QLabel(_("Datum"), dlg)
         date.move(20, 180)
             
         datum = QLineEdit(dlg)
@@ -1405,14 +1410,14 @@ class MainWindow(QMainWindow):
         dlg = QDialog()
         dlg.resize(400, 300)
             
-        title = QLabel("Termintitel", dlg)
+        title = QLabel(_("Termintitel"), dlg)
         title.move(20, 20)
             
         termintitel = QLineEdit(dlg)
         termintitel.move(50,50)
         termintitel.resize(260, 20)
             
-        description = QLabel("Terminbeschreibung", dlg)
+        description = QLabel(_("Terminbeschreibung"), dlg)
         description.move(20, 80)
             
         terminbeschreibung = QLineEdit(dlg)
@@ -1448,7 +1453,7 @@ class MainWindow(QMainWindow):
         minuten_end.addItems(["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "59"])
         minuten_end.move(270, 151)
 
-        date = QLabel("Datum", dlg)
+        date = QLabel(_("Datum"), dlg)
         date.move(20, 180)
             
         datum = QLineEdit(dlg)

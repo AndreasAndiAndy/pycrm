@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <string>
+  <input>Montag</input>
+  <output>Monday</output>
+    <input>Dienstag</input>
+  <output>Tuesday</output>
+    <input>Mittwoch</input>
+  <output>Wednesday</output>
+    <input>Donnerstag</input>
+  <output>Thursday</output>
+    <input>Freitag</input>
+  <output>Friday</output>
+    <input>Samstag</input>
+  <output>Saturday</output>
+    <input>Sonntag</input>
+  <output>Sunday</output>
   <input>Monatsansicht</input>
   <output>monthly view</output>
   <input>Wochenansicht</input>
@@ -8,5 +22,46 @@
   <output>daily view</output>
   <input>Jahresansicht</input>
   <output>yearly view</output>
+  <input>T. monatlich</input>
+  <output>monthly appointment</output>
+  <input>T. wöchentlich</input>
+  <output>weekly appointment</output>
+  <input>Bitte erst Verzeichnis wählen, wohin gedruckt werden soll!</input>
+  <output>First select directory into which output shoud be printed!</output>
+  <input>Drucke Termine</input>
+  <output>print appointments</output>
+    <input>Drucke Reskontakte</input>
+  <output>print contacts</output>
+  <input>Einzeltermin anlegen</input>
+  <output>create appointment</output>
+    <input>Pfad wählen</input>
+  <output>choose path</output>
+      <input>Terminserie löschen</input>
+  <output>delete appointment series</output>
+     <input>ResKontakt neu</input>
+  <output>create contact</output>
+    <input>Reskontakt(e) anzeigen / zum Löschen markieren</input>
+  <output>create or delete contact(s)</output>
+      <input>Lese Kontakte ein</input>
+  <output>read contacts</output>
+      <input>Lese Termine ein</input>
+  <output>read appointments</output>
+   <input>Alle Termine löschen</input>
+  <output>delete all appointments</output>
+   <input>KW:</input>
+  <output>CW:</output>
+     <input>Datum</input>
+  <output>date</output>
+     <input>Termintitel</input>
+  <output>title</output>
+       <input>Terminbeschreibung</input>
+  <output>description</output>
+     <input>Kalenderwoche-(</input>
+  <output>calender week-(</output>
+   <input>)---------------- Datum des Termins mit Wochentag - Termin (zum Bearbeiten klicken)</input>
+  <output>)---------------- Appointment date with day - appointment (click to modify)</output>
 </string>
 
+
+
+ 
