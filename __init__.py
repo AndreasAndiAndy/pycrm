@@ -23,33 +23,35 @@ from tkinter import *
 from tkinter.filedialog import askdirectory, askopenfilename
 from test.test_decimal import directory
 from os.path import exists
-import xml.etree.ElementTree as ET
 import i18n
+import xml.etree.ElementTree as ET
+
+from translator import _
 
 LOCALE = "de_DE"
 
 t = None
 
 ######################
-#Globale Funkton i18n
+#Global function i18n
 #####################
-def _(str):
+#def _(str):
 
-    LOCALE = i18n.getLocale() 
-    t = Translator.getInstance(LOCALE)
-    #print(LOCALE)
-    res = ""
+#    LOCALE = i18n.getLocale() 
+#    t = Translator.getInstance(LOCALE)
+
+#    res = ""
     
-    if str in t.keys(): 
-        res = t[str]
+#    if str in t.keys(): 
+#        res = t[str]
     
-    else:
-        res = str
+#    else:
+#        res = str
     
     
-    return res
+#    return res
  
-#Die Ressourcenkontakte können hier hinzugefügt oder bearbeitet werden.
+#Resource contacts can be edited here.
 class ScrollMessageBoxShowResourceContactsAdd(QMessageBox):  
    
    def __init__(self, *args, **kwargs):
@@ -142,7 +144,7 @@ class ScrollMessageBoxShowResourceContactsAdd(QMessageBox):
        ScrollMessageBoxRCInfo(QMessageBox.Information, nameshow, '')
 
 
-#Die Ressourcenkontakte können hier gelöscht oder bearbeitet werden.
+#Resource contacts can be edited o deleted here.
 class ScrollMessageBoxShowResourceContacts(QMessageBox):  
 
    def __init__(self, *args, **kwargs):

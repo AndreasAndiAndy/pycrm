@@ -9,7 +9,7 @@
 
 from distutils.command.check import check
 
-################################
+#from translator import _ #TODO As soon as it is necessary to translate DB entries, this function comes into play.
 
 import sqlite3
 
@@ -56,9 +56,6 @@ def insertReadListFromFile(conn, legenda, cat):
            conn.commit()
            
         cur.close()
-
-
-
 
 
 def doQueryDeleteAppointmentsAndCres2(conn):
@@ -403,7 +400,7 @@ def doQueryInsertIntoSettingsPath(conn, p):
     cur.close()
 
 
-####################################################################################################################
+
 
 def insertCresFullData2(conn, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag,  name,  iban,  bic,  notes):
     cur = conn.cursor()
@@ -437,7 +434,7 @@ def insertCresFullData2(conn, tel, mobil,  email,  str, hnr,  plz,  ort,  gebtag
     cur.close()
 
 
-####################################################################################################################
+
 
 def doQueryDescriptionFor2(conn, datum):
     result = []
