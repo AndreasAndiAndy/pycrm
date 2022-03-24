@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <string>
+  <input>Tel / Fax</input>
+  <output>phone / fax</output>
+    <input>Mobil</input>
+  <output>mobile</output>
+    <input>Email</input>
+  <output>email</output>
+    <input>Str.</input>
+  <output>street</output>
+    <input>Hausnr.</input>
+  <output>number</output>
+    <input>PLZ</input>
+  <output>postal code</output>
+    <input>Ort</input>
+  <output>location</output>
+    <input>Geb. Tag</input>
+  <output>birthday</output>
+    <input>Name</input>
+  <output>name</output>
+    <input>IBAN</input>
+  <output>IBAN</output>
+    <input>BIC</input>
+  <output>BIC</output> 
+    <input>Website(s), notes...</input>
+  <output>website(s), notes...</output>
+    <input>Neuen Ressourcenkontakt anlegen.</input>
+  <output>Create new resource contact</output>
   <input>Min.</input>
   <output>mm</output>
   <input>Montag</input>

@@ -444,17 +444,15 @@ class ScrollMessageBoxCreateRC(QMessageBox):
    def __init__(self, *args, **kwargs):
       QMessageBox.__init__(self, *args, **kwargs)
       
-      self.setWindowTitle("Neuen Ressourcenkontakt anlegen.")
+      self.setWindowTitle(_("Neuen Ressourcenkontakt anlegen."))
       
       scroll = QScrollArea(self)
       scroll.setWidgetResizable(True)
       self.content = QWidget()
       scroll.setWidget(self.content)
       lay = QVBoxLayout(self.content)
-      
-      #fieldnames = ['Tel', 'Mobil', 'Email', 'Str.', 'Hausnr.', 'PLZ', 'Ort', 'Geb. Tag', 'Name', 'IBAN', 'BIC', 'neue Kategorie']
-      
-      fieldnames = ['Tel', 'Mobil', 'Email', 'Str.', 'Hausnr.', 'PLZ', 'Ort', 'Geb. Tag', 'Name', 'IBAN', 'BIC', 'NOTES']
+ 
+      fieldnames = [_("Tel / Fax"), _("Mobil"), _("Email"), _("Str."), _("Hausnr."), _("PLZ"), _("Ort"), _("Geb. Tag"), _("Name"), _("IBAN"), _("BIC"), _("Website(s), notes...")]
       
       #categories = []
       
