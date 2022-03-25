@@ -15,7 +15,7 @@ def validatemail(email): #Eine Email, nach der Email kann in das Textfeld belieb
     if(len(email)<1):
         return True
     
-    regex = re.compile(r'(([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+){1}.*')
+    regex = re.compile(r'(([A-Za-z0-9]+[.\-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+){1}.*')
     
     if re.fullmatch(regex, email):
         return True
