@@ -1486,11 +1486,20 @@ class MainWindow(QMainWindow):
         if len(ttitel) < 1:
             ttitel = "Neuer Termin!"
         tbeschreibung = terminbeschreibung.text()
+
+        isErrorLength = False
+        
+        ###########################################################
+        if len(ttitel) > 200 or len(tbeschreibung) > 500:
+            self.showWarningFollowing("Terminname oder Terminbeschreibung zu lang!")
+            isErrorLength = True
+        
+        ###########################################################
+        
+        isError = False
         
         hh = sts.currentText()
         mm = min.currentText()
-    
-        isError = False     
         
         hh_end = uhrzeit_end.currentText()
         mm_end = minuten_end.currentText()
@@ -1498,7 +1507,6 @@ class MainWindow(QMainWindow):
         start_zeit = datetime.datetime.strptime(hh+":"+mm, "%H:%M")
         end_zeit = datetime.datetime.strptime(hh_end+":"+mm_end, "%H:%M")
         isError = start_zeit > end_zeit
-        
         
         uhrzeit = self.formatDayMonth(str(hh)) + ":" + self.formatDayMonth(str(mm))
         
@@ -1537,7 +1545,7 @@ class MainWindow(QMainWindow):
                 self.showWarningFollowing("Ungültige Zeiteingabe!")
                 isError = True
     
-            if not isError:             
+            if not (isError or isErrorLength):             
                 dbaccess.insertAppointment(dateinput, ttitel, tbeschreibung, dateinput_end)
          
             dlg.close()
@@ -1550,9 +1558,21 @@ class MainWindow(QMainWindow):
         date = datum.text()
         
         ttitel = termintitel.text()
+        
         if len(ttitel) < 1:
             ttitel = "Neuer Termin!"
         tbeschreibung = terminbeschreibung.text()
+        
+        isErrorLength = False
+        
+        ###########################################################
+        if len(ttitel) > 200 or len(tbeschreibung) > 500:
+            self.showWarningFollowing("Terminname oder Terminbeschreibung zu lang!")
+            isErrorLength = True
+        
+        ###########################################################
+        
+        isError = False
         
         hh = sts.currentText()
         mm = min.currentText()
@@ -1560,8 +1580,6 @@ class MainWindow(QMainWindow):
         uhrzeit = self.formatDayMonth(str(hh)) + ":" + self.formatDayMonth(str(mm))
                 
         isValidDate = validators.validatedatum(date)
-    
-        isError = False
     
         hh_end = uhrzeit_end.currentText()
         mm_end = minuten_end.currentText()
@@ -1609,7 +1627,7 @@ class MainWindow(QMainWindow):
                         isErrorOrBlock = True         
                         
     
-            if not isErrorOrBlock:
+            if not (isErrorOrBlock or isErrorLength):
                 dbaccess.editAppointmentDateUpdate2(ttitel, tbeschreibung, termin_alt, dateinput_end)
                 
                 newdate = date + " " + uhrzeit
@@ -1629,6 +1647,17 @@ class MainWindow(QMainWindow):
         if len(ttitel) < 1:
             ttitel = "Neuer Termin!"
         tbeschreibung = terminbeschreibung.text()
+        
+        
+        isErrorLength = False
+        
+        ###########################################################
+        if len(ttitel) > 200 or len(tbeschreibung) > 500:
+            self.showWarningFollowing("Terminname oder Terminbeschreibung zu lang!")
+            isErrorLength = True
+        
+        ###########################################################
+        
         
         hh = sts.currentText()
         mm = min.currentText()
@@ -1686,12 +1715,13 @@ class MainWindow(QMainWindow):
                             if not isError:
                                 monthliesToAppend.append(m)
                             
-                    dbaccess.insertAppointmentWithTitleAndDescription2(monthliesToAppend,ttitel, tbeschreibung, uhrzeit_end) 
+                    if not isErrorLength: ############################################################################################
+                        dbaccess.insertAppointmentWithTitleAndDescription2(monthliesToAppend,ttitel, tbeschreibung, uhrzeit_end) 
          
                 else:
-                
-                    dbaccess.insertAppointmentWithTitleAndDescription2(monthlies,ttitel, tbeschreibung, uhrzeit_end) 
-                    thedates = monthlies
+                    if not isErrorLength: #############################################################################################
+                        dbaccess.insertAppointmentWithTitleAndDescription2(monthlies,ttitel, tbeschreibung, uhrzeit_end) 
+                        thedates = monthlies
          
             if btn == "weekly":
                 wkliesToAppend = []
@@ -1715,11 +1745,13 @@ class MainWindow(QMainWindow):
                             if not isError:
                                 wkliesToAppend.append(w)
                 
-                    dbaccess.insertAppointmentWithTitleAndDescription2(wkliesToAppend,ttitel, tbeschreibung, uhrzeit_end)
+                    if not isErrorLength: ########################################################################################
+                        dbaccess.insertAppointmentWithTitleAndDescription2(wkliesToAppend,ttitel, tbeschreibung, uhrzeit_end)
          
                 else:
-                    dbaccess.insertAppointmentWithTitleAndDescription2(wklies,ttitel, tbeschreibung, uhrzeit_end)
-                    thedates = wklies
+                    if not isErrorLength: ########################################################################################
+                        dbaccess.insertAppointmentWithTitleAndDescription2(wklies,ttitel, tbeschreibung, uhrzeit_end)
+                        thedates = wklies
                     
             dlg.close()
     
