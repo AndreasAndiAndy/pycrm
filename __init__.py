@@ -1490,7 +1490,7 @@ class MainWindow(QMainWindow):
         isErrorLength = False
         
         ###########################################################
-        if len(ttitel) > 200 or len(tbeschreibung) > 500:
+        if len(ttitel) > 200 or len(tbeschreibung) > 600:
             self.showWarningFollowing("Terminname oder Terminbeschreibung zu lang!")
             isErrorLength = True
         
@@ -1566,7 +1566,7 @@ class MainWindow(QMainWindow):
         isErrorLength = False
         
         ###########################################################
-        if len(ttitel) > 200 or len(tbeschreibung) > 500:
+        if len(ttitel) > 200 or len(tbeschreibung) > 600:
             self.showWarningFollowing("Terminname oder Terminbeschreibung zu lang!")
             isErrorLength = True
         
@@ -1652,7 +1652,7 @@ class MainWindow(QMainWindow):
         isErrorLength = False
         
         ###########################################################
-        if len(ttitel) > 200 or len(tbeschreibung) > 500:
+        if len(ttitel) > 200 or len(tbeschreibung) > 600:
             self.showWarningFollowing("Terminname oder Terminbeschreibung zu lang!")
             isErrorLength = True
         
